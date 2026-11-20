@@ -328,3 +328,18 @@ main { animation: page-in .35s ease both; }
   html { scroll-behavior: auto; }
   *, *::before, *::after, ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Hesap / e-posta hatırlatma ---------- */
+.account { padding: 20px 22px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 14px; border-color: #cddbec; }
+.account h3 { font-family: var(--serif); font-weight: 600; font-size: 20px; margin: 0 0 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.account .acc-head p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.acc-form { display: flex; flex-direction: column; gap: 14px; max-width: 520px; }
+.acc-form p { margin: 0; color: var(--ink-2); }
+.account input[type="email"], .account input[type="text"] { font: inherit; font-size: 16px; border: 1px solid var(--line-2); border-radius: 8px; padding: 11px 12px; min-height: 48px; width: 100%; background: #fff; color: var(--ink); }
+#acc-code { font-family: var(--mono); font-size: 22px; letter-spacing: .3em; max-width: 240px; }
+.acc-who { margin: 0; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.acc-who .dot { width: 10px; height: 10px; border-radius: 99px; background: #2f8f4e; display: inline-block; }
+.acc-status { margin: 0; font-size: 14px; color: #1e6b45; }
+.acc-status:empty { display: none; }
+.danger-btn { color: #9b1c1c !important; }
+.account .hint { font-size: 13.5px; }

@@ -193,7 +193,19 @@ if (!storage) {
 function persist() {
   if (!store.save(st, items)) listMsg('Kaydedilemedi: tarayıcı depolaması dolu ya da kapalı.');
   renderList();
+  // Hesap açıksa (account.js) değişiklik buluta da gönderilir
+  document.dispatchEvent(new CustomEvent('muhlet:changed', { detail: { items } }));
 }
+const touch = (x) => { x.updatedAt = new Date().toISOString(); };
+
+// Hesaptan gelen birleştirilmiş liste (giriş ya da eşitleme sonrası)
+document.addEventListener('muhlet:replace', (e) => {
+  items = e.detail.items;
+  store.save(st, items);
+  renderList();
+});
+// account.js'nin o anki listeyi okuyabilmesi için
+document.addEventListener('muhlet:get', (e) => { e.detail.items = items; });
 
 function listMsg(text) {
   const m = $('list-msg');
@@ -289,19 +301,19 @@ function renderList() {
       const up = el('button', null, 'Yeni tarihi kullan');
       up.type = 'button';
       up.style.marginLeft = '8px';
-      up.addEventListener('click', () => { x.lastDay = changed; persist(); });
+      up.addEventListener('click', () => { x.lastDay = changed; touch(x); persist(); });
       c.append(up);
       li.append(c);
     }
 
     const acts = el('div', 'acts');
     const b = (label, fn, cls) => { const n = el('button', cls, label); n.type = 'button'; n.addEventListener('click', fn); acts.append(n); };
-    if (!x.done) b('İşlem yapıldı', () => { x.done = true; x.doneAt = new Date().toISOString(); persist(); listMsg(`${x.code} tamamlandı olarak işaretlendi.`); });
-    else b('Geri al', () => { x.done = false; x.doneAt = null; persist(); });
+    if (!x.done) b('İşlem yapıldı', () => { x.done = true; x.doneAt = new Date().toISOString(); touch(x); persist(); listMsg(`${x.code} tamamlandı olarak işaretlendi.`); });
+    else b('Geri al', () => { x.done = false; x.doneAt = null; touch(x); persist(); });
     b('Takvime ekle', () => download(`sure-${x.lastDay}.ics`, store.buildICS([x]), 'text/calendar;charset=utf-8'));
     b('Sil', () => {
       if (acts.dataset.confirm !== '1') { acts.dataset.confirm = '1'; acts.lastChild.textContent = 'Silmek için tekrar bas'; return; }
-      items = items.filter((y) => y.id !== x.id); persist(); listMsg(`${x.code} silindi.`);
+      items = items.filter((y) => y.id !== x.id); document.dispatchEvent(new CustomEvent('muhlet:deleted', { detail: { id: x.id } })); persist(); listMsg(`${x.code} silindi.`);
     }, 'danger');
     li.append(acts);
     list.append(li);

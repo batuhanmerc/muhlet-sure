@@ -99,7 +99,7 @@ out('gizlilik.html', page({
 <h1>Gizlilik ve KVKK aydınlatma metni</h1>
 <p class="muted">Son güncelleme: ${SITE.rulesUpdated}</p>
 
-<div class="callout"><strong>Kısaca:</strong> Mühlet Süre’ye üye olmazsınız, çerez ve ziyaretçi takibi kullanmayız. Yüklediğiniz evrak ve kaydettiğiniz süreler yalnızca sizin tarayıcınızda işlenir; bize ulaşmaz.</div>
+<div class="callout"><strong>Kısaca:</strong> Hesaplayıcıyı üye olmadan kullanırsınız; çerez ve ziyaretçi takibi kullanmayız. Yüklediğiniz evrak yalnızca tarayıcınızda işlenir, hiçbir zaman bize ulaşmaz. İsteğe bağlı <b>e-posta hatırlatma</b> hesabı açarsanız, yalnızca e-posta adresiniz, dosya kodlarınız, işlem türleri ve tarihler hatırlatma göndermek için saklanır; notlarınız cihazınızda kalır.</div>
 
 <h2>1. Veri sorumlusu</h2>
 <p>6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) kapsamında veri sorumlusu ${esc(SITE.owner)}’dır (“Mühlet Süre”). İletişim: <a href="mailto:${SITE.email}">${esc(SITE.email)}</a></p>
@@ -112,7 +112,19 @@ out('gizlilik.html', page({
 </ul>
 <p>Kayıtlara müvekkil adı, TC kimlik numarası veya dava içeriği yazmamanızı rica ederiz. Avukat–müvekkil gizliliğine ilişkin yükümlülük, cihazınızda tuttuğunuz bilgiler bakımından sizdedir.</p>
 
-<h2>3. İşlenen veriler ve amaçları</h2>
+<h2>3. E-posta hatırlatma hesabı (isteğe bağlı, beta)</h2>
+<p>Hatırlatma almak için hesap açarsanız aşağıdaki veriler işlenir:</p>
+<ul>
+  <li><b>Kimlik/iletişim:</b> e-posta adresiniz (giriş kodu ve hatırlatma göndermek için).</li>
+  <li><b>Kayıt bilgileri:</b> sizin belirlediğiniz kısa dosya kodu, işlem türü, kanun dayanağı, tebliğ ve son gün tarihleri, “işlem yapıldı” durumu.</li>
+  <li><b>İşlem kayıtları:</b> giriş zamanları, onay zamanı, gönderilen hatırlatmaların kaydı.</li>
+</ul>
+<p><b>Notlarınız sunucuya gönderilmez.</b> Dosya koduna müvekkil adı, TC kimlik numarası veya dava içeriği yazmamanız gerekir.</p>
+<p><b>Amaç ve hukuki sebep:</b> Hatırlatma hizmetinin sunulması ve kayıtlarınızın cihazlarınız arasında eşitlenmesi (KVKK m.5/2-c, sözleşmenin kurulması ve ifası).</p>
+<p><b>Hizmet sağlayıcılar ve yurt dışına aktarım:</b> Veriler Supabase (veritabanı ve giriş sistemi; sunucu konumu Frankfurt, Almanya) ve Resend (e-posta gönderimi, ABD) altyapıları kullanılarak işlenir. Bu aktarımlar KVKK m.9 kapsamında yapılır.</p>
+<p><b>Saklama süresi:</b> Veriler hesabınız açık kaldığı sürece saklanır. Sitedeki “Hesabımı sil” düğmesiyle hesabınızı ve sunucudaki tüm kayıtlarınızı dilediğiniz an kalıcı olarak silebilirsiniz.</p>
+
+<h2>4. Diğer işlenen veriler ve amaçları</h2>
 <ul>
   <li><b>Sunucu erişim kayıtları:</b> Site GitHub Pages (GitHub, Inc., ABD) üzerinde barındırılmaktadır. Sayfayı açtığınızda IP adresiniz ve tarayıcı bilgileriniz, hizmetin güvenli sunulması amacıyla barındırma sağlayıcısı tarafından teknik olarak işlenir.</li>
   <li><b>Yazı tipleri:</b> Sayfadaki yazı tipleri Google Fonts (Google LLC, ABD) üzerinden yüklenir. Bu sırada IP adresiniz Google’a iletilir.</li>
@@ -120,13 +132,13 @@ out('gizlilik.html', page({
 </ul>
 <p>Bu veriler KVKK m.5/2-f (meşru menfaat) ve m.5/2-c (hizmetin sunulması) hukuki sebeplerine dayanılarak işlenir. Barındırma ve yazı tipi hizmetleri yurt dışında bulunduğundan veriler KVKK m.9 kapsamında yurt dışına aktarılmaktadır.</p>
 
-<h2>4. Çerezler</h2>
-<p>Mühlet Süre çerez, reklam ya da ziyaretçi analizi aracı kullanmaz. Sürelerim listesi için kullanılan yerel depolama, yalnızca sizin cihazınızda çalışır ve silinebilir.</p>
+<h2>5. Çerezler</h2>
+<p>Mühlet Süre çerez, reklam ya da ziyaretçi analizi aracı kullanmaz. Sürelerim listesi ve (hesap açtıysanız) oturum bilginiz için kullanılan yerel depolama, yalnızca sizin cihazınızda çalışır ve silinebilir.</p>
 
-<h2>5. Haklarınız</h2>
+<h2>6. Haklarınız</h2>
 <p>KVKK m.11 uyarınca kişisel verilerinizin işlenip işlenmediğini öğrenme, bilgi talep etme, düzeltilmesini veya silinmesini isteme ve itiraz etme haklarına sahipsiniz. Taleplerinizi <a href="mailto:${SITE.email}">${esc(SITE.email)}</a> adresine iletebilirsiniz.</p>
 
-<p class="muted">Bu metin hizmet geliştikçe güncellenebilir. Ücretli hizmetler, hesap açma ya da sunucu tarafında veri saklama eklenirse metin yeniden düzenlenecektir.</p>
+<p class="muted">Bu metin hizmet geliştikçe güncellenebilir. Ücretli hizmetler eklendiğinde metin yeniden düzenlenecektir.</p>
 </article>`,
 }));
 
@@ -154,13 +166,16 @@ out('kullanim-kosullari.html', page({
   <li>Siteyi hukuka aykırı amaçlarla ya da hizmetin işleyişini bozacak şekilde kullanmamak.</li>
 </ul>
 
-<h2>4. Veriler</h2>
-<p>Evrak ve kayıtlar yalnızca kullanıcının cihazında işlenir. Tarayıcı verilerinin silinmesi hâlinde kayıtlar kaybolur; düzenli yedek almak kullanıcının sorumluluğundadır. Ayrıntılar için <a href="gizlilik.html">Gizlilik ve KVKK</a> sayfasına bakın.</p>
+<h2>4. E-posta hatırlatma (beta)</h2>
+<p>E-posta hatırlatma hizmeti şu an ücretsiz beta olarak sunulmaktadır. Hatırlatmalar, kaydettiğiniz son günden 7 gün ve 3 gün önce ve son gün sabahı gönderilmeye çalışılır. E-postaların gecikmesi, gereksiz klasörüne düşmesi veya teknik bir arıza nedeniyle gönderilememesi mümkündür. Hatırlatma hizmeti, sürelerin avukat tarafından ayrıca takip edilmesi yükümlülüğünü ortadan kaldırmaz. Beta süresince hizmetin kapsamı değiştirilebilir veya hizmet sonlandırılabilir; bu durumda önceden e-posta ile bilgi verilir.</p>
 
-<h2>5. Fikri mülkiyet</h2>
+<h2>5. Veriler</h2>
+<p>Evrak yalnızca kullanıcının cihazında işlenir. Hesap açılmadıysa kayıtlar da yalnızca cihazda tutulur; tarayıcı verilerinin silinmesi hâlinde kaybolur ve düzenli yedek almak kullanıcının sorumluluğundadır. Ayrıntılar için <a href="gizlilik.html">Gizlilik ve KVKK</a> sayfasına bakın.</p>
+
+<h2>6. Fikri mülkiyet</h2>
 <p>Sitenin tasarımı ve içeriği Mühlet Süre’ye aittir. PDF okuma için Mozilla’nın açık kaynaklı pdf.js kütüphanesi (Apache 2.0 lisansı) kullanılmaktadır.</p>
 
-<h2>6. Değişiklikler ve uygulanacak hukuk</h2>
+<h2>7. Değişiklikler ve uygulanacak hukuk</h2>
 <p>Bu koşullar güncellenebilir; güncel metin bu sayfada yayımlanır. Koşullara Türk hukuku uygulanır.</p>
 </article>`,
 }));
