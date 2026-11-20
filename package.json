@@ -6,6 +6,6 @@
   "description": "Mühlet Süre — avukatlar için ücretsiz yasal süre hesaplayıcı (statik site)",
   "scripts": {
     "build": "node tools/build.mjs",
-    "test": "node --test tests/engine.test.mjs tests/store.test.mjs tests/classify.test.mjs"
+    "test": "node --test tests/engine.test.mjs tests/store.test.mjs tests/classify.test.mjs tests/cloud.test.mjs tests/reminders.test.mjs"
   }
 }

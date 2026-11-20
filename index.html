@@ -178,6 +178,54 @@
     <div class="notice" id="storage-note">
       <strong>Kayıtlarınız sadece bu tarayıcıda durur.</strong> Sunucuya gönderilmez, başka cihazda görünmez. Tarayıcı verilerini silerseniz kaybolur, bu yüzden düzenli olarak yedek alın.
     </div>
+    <section class="card account" id="account" aria-labelledby="acc-h" hidden>
+      <div class="acc-head">
+        <h3 id="acc-h">E-posta ile hatırlatma <span class="new">Ücretsiz beta</span></h3>
+        <p id="acc-lead">Giriş yapın; kaydettiğiniz her süre için <b>7 gün</b>, <b>3 gün kala</b> ve <b>son gün</b> sabah 08.00'de e-posta gelsin. Süreleriniz diğer cihazlarınızda da görünür.</p>
+      </div>
+
+      <form id="acc-email-form" class="acc-form" novalidate>
+        <div class="field">
+          <label for="acc-email">E-posta adresiniz</label>
+          <input id="acc-email" type="email" autocomplete="email" inputmode="email" required maxlength="254" placeholder="ornek@avukat.com">
+        </div>
+        <label class="check">
+          <input type="checkbox" id="acc-consent">
+          <span><a href="gizlilik.html" target="_blank" rel="noopener">Gizlilik ve KVKK metnini</a> ve <a href="kullanim-kosullari.html" target="_blank" rel="noopener">kullanım koşullarını</a> okudum. Dosya kodlarımın ve tarihlerin hatırlatma için sunucuda saklanmasını kabul ediyorum.</span>
+        </label>
+        <button type="submit" class="btn primary">Giriş kodu gönder</button>
+      </form>
+
+      <form id="acc-code-form" class="acc-form" novalidate hidden>
+        <p id="acc-code-info"></p>
+        <div class="field">
+          <label for="acc-code">E-postanıza gelen kod</label>
+          <input id="acc-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="10" placeholder="123456">
+        </div>
+        <div class="row">
+          <button type="submit" class="btn primary">Giriş yap</button>
+          <button type="button" class="btn ghost" id="acc-back">E-postayı değiştir</button>
+        </div>
+      </form>
+
+      <div id="acc-in" hidden>
+        <p class="acc-who"><span class="dot" aria-hidden="true"></span> <span id="acc-who"></span></p>
+        <label class="check">
+          <input type="checkbox" id="acc-reminders">
+          <span><strong>Hatırlatma e-postaları açık</strong><br><span class="hint">Kapatırsanız süreleriniz hesabınızda kalır, sadece e-posta gelmez.</span></span>
+        </label>
+        <div class="row">
+          <button type="button" class="btn ghost" id="acc-sync">Şimdi eşitle</button>
+          <button type="button" class="btn ghost" id="acc-out">Çıkış yap</button>
+          <button type="button" class="btn ghost danger-btn" id="acc-delete">Hesabımı sil</button>
+        </div>
+      </div>
+
+      <p class="error" id="acc-error" role="alert" hidden></p>
+      <p class="acc-status" id="acc-status" role="status"></p>
+      <p class="hint">Sunucuya yalnızca dosya kodu, işlem türü ve tarihler gider. <b>Notlarınız bu cihazda kalır.</b> Kayıtlara müvekkil adı yazmayın.</p>
+    </section>
+
     <div id="list-empty" class="list-empty">Henüz kayıtlı süre yok. Bir süre hesaplayıp <strong>Sürelerime kaydet</strong>'e basın.</div>
     <ul class="dl" id="list"></ul>
     <div class="list-tools">
@@ -257,6 +305,7 @@
 
 <script type="module" src="js/app.js"></script>
 <script type="module" src="js/evrak.js"></script>
+<script type="module" src="js/account.js"></script>
 <script type="module" src="js/pwa.js"></script>
 </body>
 </html>

@@ -35,6 +35,11 @@ img/                  Simge ve paylaşım görseli
 tools/site.mjs        Site ayarları: adres, e-posta, sahip adı, menü ve alt bilgi
 tools/content.mjs     SSS ve süre rehberi metinleri
 tools/build.mjs       Sayfa üretici (npm run build)
+js/config.js          Bulut ayarı (Supabase adresi ve herkese açık anahtar; boşsa bulut kapalı)
+js/cloud.js           Supabase istemcisi: e-posta koduyla giriş, eşitleme
+js/account.js         Sürelerim'deki "E-posta ile hatırlatma" bölümü
+supabase/             Veritabanı şeması, zamanlayıcı ve sunucu fonksiyonları
+KURULUM-HATIRLATMA.md E-posta hatırlatmayı açmak için adım adım kurulum
 css/style.css         Görünüm
 js/rules.js           13 süre kuralı (kanun dayanağı ve sürümleriyle)
 js/holidays.js        2025–2027 resmî tatil ve dini bayram tarihleri
