@@ -26,7 +26,15 @@ Site tamamen statiktir: sunucu, veritabanı ya da kurulum gerekmez. Girilen bilg
 ## Klasör yapısı
 
 ```
-index.html            Sayfa
+index.html            Ana sayfa (üst menü, alt bilgi ve SSS bölümü build ile doldurulur)
+sss.html, gizlilik.html, kullanim-kosullari.html, 404.html   Üretilen sayfalar
+sureler/              Süre rehberi: her süre için ayrı sayfa (üretilir)
+sitemap.xml, robots.txt, manifest.webmanifest              Üretilen dosyalar
+sw.js, js/pwa.js      Telefona kurulabilme ve internetsiz açılma
+img/                  Simge ve paylaşım görseli
+tools/site.mjs        Site ayarları: adres, e-posta, sahip adı, menü ve alt bilgi
+tools/content.mjs     SSS ve süre rehberi metinleri
+tools/build.mjs       Sayfa üretici (npm run build)
 css/style.css         Görünüm
 js/rules.js           13 süre kuralı (kanun dayanağı ve sürümleriyle)
 js/holidays.js        2025–2027 resmî tatil ve dini bayram tarihleri
@@ -55,9 +63,16 @@ tests/classify.test.mjs Belge türü tanıma testleri
 
 ## Yayından önce değiştirmen gerekenler
 
-`index.html` içinde:
-- `[E-POSTA-ADRESIN]` → kendi e-posta adresin (2 yerde)
-- `[TARİH]` → kuralların avukat tarafından son doğrulandığı tarih
+`tools/site.mjs` içinde:
+- `email: '[E-POSTA-ADRESIN]'` → iletişim e-postan
+- `owner: '[AD SOYAD]'` → KVKK metnindeki veri sorumlusu (senin adın)
+- `BASE_URL` → kendi alan adına geçince yeni adres
+
+Sonra `npm run build` çalıştır; tüm sayfalar yeniden üretilir. (Ya da değerleri bana yaz, ben üretip göndereyim.)
+
+Metinleri değiştirmek için `tools/content.mjs` (SSS, süre rehberi) ve `tools/build.mjs` (gizlilik, kullanım koşulları) dosyalarını düzenleyip yine `npm run build` çalıştır. Üretilen .html dosyalarını elle düzenleme; bir sonraki build'de üzerine yazılır.
+
+Gizlilik ve kullanım koşulları metinleri taslaktır; yayından önce bir avukata okutulmalıdır.
 
 ## Bilgisayarında çalıştırmak ve test etmek
 

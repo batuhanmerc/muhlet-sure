@@ -37,7 +37,10 @@ for (const r of RULES) {
 }
 
 // Bağlantıdan işlem seçimi: index.html#HMK-IST
-if (location.hash && RULES.some((r) => r.code === location.hash.slice(1))) select.value = location.hash.slice(1);
+if (location.hash && RULES.some((r) => r.code === location.hash.slice(1))) {
+  select.value = location.hash.slice(1);
+  requestAnimationFrame(() => $('hesapla').scrollIntoView({ block: 'start' }));
+}
 
 const labels = {
   e: ['e-Tebligatın adresinize ulaştığı tarih', 'Belgeyi açtığınız tarih değil, adresinize ulaştığı tarih. Tebliğ, ulaşmayı izleyen 5. günün sonunda yapılmış sayılır.'],

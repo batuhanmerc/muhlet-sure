@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://batuhanmerc.github.io/muhlet-sure/sitemap.xml

@@ -1,41 +1,67 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<!--build:head-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yasal Süre Hesaplayıcı | Mühlet Süre</title>
-<meta name="description" content="İstinaf, temyiz, cevap dilekçesi, ödeme emrine itiraz ve idari dava süreleri için ücretsiz son gün hesaplayıcı. e-Tebligat, adli tatil ve resmî tatiller dahil; hesabın her adımı kanun dayanağıyla.">
+<title>Yasal Süre Hesaplayıcı: İstinaf, Temyiz, İtiraz Süreleri | Mühlet Süre</title>
+<meta name="description" content="Avukatlar için ücretsiz yasal süre hesaplayıcı. İstinaf, temyiz, cevap dilekçesi, ödeme emrine itiraz ve idari dava süreleri; e-Tebligat, adli tatil ve resmî tatiller dahil, her adım kanun dayanağıyla.">
+<link rel="canonical" href="https://batuhanmerc.github.io/muhlet-sure/">
+<meta name="theme-color" content="#1f3a5f">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Mühlet Süre">
+<meta property="og:title" content="Yasal Süre Hesaplayıcı: İstinaf, Temyiz, İtiraz Süreleri | Mühlet Süre">
+<meta property="og:description" content="Avukatlar için ücretsiz yasal süre hesaplayıcı. İstinaf, temyiz, cevap dilekçesi, ödeme emrine itiraz ve idari dava süreleri; e-Tebligat, adli tatil ve resmî tatiller dahil, her adım kanun dayanağıyla.">
+<meta property="og:url" content="https://batuhanmerc.github.io/muhlet-sure/">
+<meta property="og:image" content="https://batuhanmerc.github.io/muhlet-sure/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./img/icon-192.png">
+<link rel="manifest" href="./manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='1' y='1' width='26' height='26' rx='7' fill='%231f3a5f'/%3E%3Ccircle cx='20' cy='19' r='3' fill='%23e2884a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./css/style.css">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebApplication","name":"Mühlet Süre","url":"https://batuhanmerc.github.io/muhlet-sure/","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"tr","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"description":"Türk hukukunda yasal sürelerin son gününü kanun dayanağıyla hesaplayan ücretsiz araç."},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mühlet Süre ücretli mi?","acceptedAnswer":{"@type":"Answer","text":"Hayır. Süre hesaplayıcı, evraktan süre bulma ve Sürelerim listesi ücretsizdir; üyelik gerekmez."}},{"@type":"Question","name":"e-Tebligatta süre ne zaman başlar?","acceptedAnswer":{"@type":"Answer","text":"Tebligat Kanunu m.7/a uyarınca elektronik tebligat, muhatabın elektronik adresine ulaştığı tarihi izleyen beşinci günün sonunda yapılmış sayılır. Belgeyi daha erken açmanız bu tarihi değiştirmez. Süre, tebliğ tarihinin ertesi gününden itibaren işlemeye başlar."}},{"@type":"Question","name":"Adli tatil süreleri nasıl etkiler?","acceptedAnswer":{"@type":"Answer","text":"Adli tatil her yıl 20 Temmuz’da başlar, 31 Ağustos’ta biter. Hukuk davalarında tatile denk gelen süreler tatilin bitiminden itibaren 1 hafta (HMK m.104), idari yargıda 7 gün (İYUK m.8), ceza yargılamasında 3 gün (CMK m.331) uzamış sayılır. Adli tatilde görülen işlerde (ör. iş davaları, tutuklu işler) bu uzatma uygulanmaz. Uygulamada farklı yorum bulunan durumlarda hesaplayıcı en erken tarihi gösterir ve diğer ihtimali ayrıca belirtir."}},{"@type":"Question","name":"Son gün resmî tatile veya hafta sonuna denk gelirse ne olur?","acceptedAnswer":{"@type":"Answer","text":"Süre, izleyen ilk iş günü sona erer. Son gün bir arife gününe (yarım gün) denk gelirse hesaplayıcı ayrıca uyarır; resmî tatil 13.00’te başladığından işlemi öğleden önce yapmanız gerekir."}},{"@type":"Question","name":"7499 sayılı Kanun ceza kanun yolu sürelerini nasıl değiştirdi?","acceptedAnswer":{"@type":"Answer","text":"İstinaf ve temyiz başvuru süreleri iki hafta olarak düzenlendi. Hangi sürenin uygulanacağı karar tarihine göre belirlendiğinden, ceza kanun yollarında hesaplayıcı sizden karar tarihini de ister."}}]}]</script>
+<!--/build:head-->
 </head>
 <body>
 
+<!--build:header-->
 <div class="beta" role="status">
   <strong>Test sürümü:</strong> Süre kuralları henüz bir avukat tarafından doğrulanmadı. Sonuçları mutlaka kendiniz kontrol edin.
 </div>
 
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="./">
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#1f3a5f"/><path d="M8 9h12M8 14h8M8 19h5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="20" cy="19" r="2.6" fill="#e2884a"/></svg>
-      <span>Mühlet Süre</span>
-    </a>
+    <a class="brand" href="./"><svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#1f3a5f"/><path d="M8 9h12M8 14h8M8 19h5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="20" cy="19" r="2.6" fill="#e2884a"/></svg><span>Mühlet Süre</span></a>
     <nav aria-label="Ana menü">
       <a href="#hesapla" aria-current="page">Hesapla</a>
       <a href="#surelerim">Sürelerim <span class="count" id="nav-count" hidden></span></a>
-      <a href="#sureler">Süre türleri</a>
+      <a href="./sureler/">Süre rehberi</a>
+      <a href="./sss.html">SSS</a>
     </nav>
   </div>
 </header>
+<!--/build:header-->
 
 <main class="wrap">
-  <section class="intro">
-    <p class="eyebrow">Ücretsiz · Kayıt gerekmez</p>
-    <h1>Yasal süre hesaplayıcı</h1>
-    <p class="lead">Tebligat türünü ve tarihi girin. Son günü, hesabın her adımı ve kanun dayanağıyla birlikte görün.</p>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Ücretsiz · Kayıt gerekmez · Avukatlar için</p>
+      <h1>Süreyi kaçırmayın.<br>Son günü kanun dayanağıyla görün.</h1>
+      <p class="lead">e-Tebligat, adli tatil ve resmî tatilleri hesaba katan yasal süre hesaplayıcı. UYAP evrakını bırakın, hangi sürenin işlediğini birlikte bulalım.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#hesapla">Süre hesapla</a>
+        <a class="btn ghost" href="#evrak">Evraktan bul</a>
+      </div>
+    </div>
+    <ul class="trust" aria-label="Öne çıkanlar">
+      <li><span class="ti" aria-hidden="true">§</span><div><b>Her adım kanun dayanaklı</b><span>Tebliğden son güne kadar hesabın tamamı madde numarasıyla gösterilir.</span></div></li>
+      <li><span class="ti" aria-hidden="true">☼</span><div><b>Adli tatil ve bayramlar dahil</b><span>HMK, CMK, İYUK ve İİK’nın farklı tatil kuralları ayrı ayrı uygulanır.</span></div></li>
+      <li><span class="ti" aria-hidden="true">⌂</span><div><b>Evrak cihazınızdan çıkmaz</b><span>Okuma ve kayıt tarayıcınızda yapılır; sunucuya hiçbir şey gönderilmez.</span></div></li>
+    </ul>
   </section>
 
   <section class="card drop" id="evrak" aria-labelledby="evrak-h">
@@ -139,10 +165,7 @@
     </section>
   </div>
 
-  <section id="sureler" class="block">
-    <h2>Hesaplanabilen süreler</h2>
-    <div class="grid" id="rule-grid"></div>
-  </section>
+  
 
   <section id="surelerim" class="block">
     <div class="list-head">
@@ -166,17 +189,74 @@
     <p class="hint">Takvim dosyasını Google Takvim, Outlook ya da Apple Takvim'e içe aktarın. Her süre için 7 gün, 3 gün kala ve son gün hatırlatması eklenir. Bir süre için "İşlem yapıldı" dediğinizde takviminizdeki etkinliği elle silmeniz gerekir.</p>
   </section>
 
+  <section class="block how" aria-labelledby="how-h">
+    <h2 id="how-h">Nasıl çalışır?</h2>
+    <ol class="how-steps">
+      <li><b>İşlemi seçin</b><span>Ya da UYAP evrakını bırakın; evrakın türüne göre süreyi biz önerelim.</span></li>
+      <li><b>Tebliğ şeklini ve tarihi girin</b><span>e-Tebligat, fiziki tebliğ ya da tefhim. e-Tebligatın 5 günlük kuralı otomatik uygulanır.</span></li>
+      <li><b>Son günü ve dayanağını görün</b><span>Adli tatil, hafta sonu ve bayram kaydırmaları adım adım gösterilir.</span></li>
+      <li><b>Kaydedin, takviminize ekleyin</b><span>7 gün, 3 gün kala ve son gün hatırlatmalı .ics dosyası alın.</span></li>
+    </ol>
+  </section>
+
+  <section id="sureler" class="block">
+    <div class="block-head"><h2>Hesaplanabilen süreler</h2><a href="sureler/">Süre rehberine git →</a></div>
+    <p class="block-lead">Bir süreye tıklayın, formda seçilsin. Her sürenin açıklaması ve örnek hesapları süre rehberinde.</p>
+    <div class="grid" id="rule-grid"></div>
+  </section>
+
+  <section class="block" id="sss-kisa" aria-labelledby="faq-h">
+    <div class="block-head"><h2 id="faq-h">Sık sorulan sorular</h2><a href="sss.html">Tüm sorular →</a></div>
+    <!--build:faq-->
+<div class="faq">
+  <details><summary>Mühlet Süre ücretli mi?</summary><p>Hayır. Süre hesaplayıcı, evraktan süre bulma ve Sürelerim listesi ücretsizdir; üyelik gerekmez.</p></details>
+  <details><summary>e-Tebligatta süre ne zaman başlar?</summary><p>Tebligat Kanunu m.7/a uyarınca elektronik tebligat, muhatabın elektronik adresine ulaştığı tarihi izleyen beşinci günün sonunda yapılmış sayılır. Belgeyi daha erken açmanız bu tarihi değiştirmez. Süre, tebliğ tarihinin ertesi gününden itibaren işlemeye başlar.</p></details>
+  <details><summary>Adli tatil süreleri nasıl etkiler?</summary><p>Adli tatil her yıl 20 Temmuz’da başlar, 31 Ağustos’ta biter. Hukuk davalarında tatile denk gelen süreler tatilin bitiminden itibaren 1 hafta (HMK m.104), idari yargıda 7 gün (İYUK m.8), ceza yargılamasında 3 gün (CMK m.331) uzamış sayılır. Adli tatilde görülen işlerde (ör. iş davaları, tutuklu işler) bu uzatma uygulanmaz. Uygulamada farklı yorum bulunan durumlarda hesaplayıcı en erken tarihi gösterir ve diğer ihtimali ayrıca belirtir.</p></details>
+  <details><summary>Son gün resmî tatile veya hafta sonuna denk gelirse ne olur?</summary><p>Süre, izleyen ilk iş günü sona erer. Son gün bir arife gününe (yarım gün) denk gelirse hesaplayıcı ayrıca uyarır; resmî tatil 13.00’te başladığından işlemi öğleden önce yapmanız gerekir.</p></details>
+  <details><summary>7499 sayılı Kanun ceza kanun yolu sürelerini nasıl değiştirdi?</summary><p>İstinaf ve temyiz başvuru süreleri iki hafta olarak düzenlendi. Hangi sürenin uygulanacağı karar tarihine göre belirlendiğinden, ceza kanun yollarında hesaplayıcı sizden karar tarihini de ister.</p></details>
+</div>
+<!--/build:faq-->
+  </section>
+
+
 </main>
 
+<!--build:footer-->
 <footer class="site-footer">
-  <div class="wrap footer-row">
+  <div class="wrap footer-grid">
+    <div class="f-brand">
+      <a class="brand" href="./"><svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#1f3a5f"/><path d="M8 9h12M8 14h8M8 19h5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="20" cy="19" r="2.6" fill="#e2884a"/></svg><span>Mühlet Süre</span></a>
+      <p>Avukatlar için ücretsiz yasal süre hesaplayıcı. Evrakınız ve kayıtlarınız cihazınızdan çıkmaz.</p>
+    </div>
+    <div>
+      <h2>Araç</h2>
+      <ul>
+        <li><a href="#hesapla">Süre hesapla</a></li>
+        <li><a href="#evrak">Evraktan süre bul</a></li>
+        <li><a href="#surelerim">Sürelerim</a></li>
+        <li><a href="./sureler/">Süre rehberi</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Bilgi</h2>
+      <ul>
+        <li><a href="./sss.html">Sık sorulan sorular</a></li>
+        <li><a href="./gizlilik.html">Gizlilik ve KVKK</a></li>
+        <li><a href="./kullanim-kosullari.html">Kullanım koşulları</a></li>
+        <li><a href="mailto:[E-POSTA-ADRESIN]">İletişim ve hata bildirimi</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap f-bottom">
     <span>© 2026 Mühlet Süre</span>
-    <span>Kurallar en son güncelleme: [TARİH]</span>
-    <a href="mailto:[E-POSTA-ADRESIN]">İletişim</a>
+    <span>Süre kuralları son gözden geçirme: 20 Kasım 2026</span>
+    <span>Hukuki görüş değildir. Son kontrol ve sorumluluk avukattadır.</span>
   </div>
 </footer>
+<!--/build:footer-->
 
 <script type="module" src="js/app.js"></script>
 <script type="module" src="js/evrak.js"></script>
+<script type="module" src="js/pwa.js"></script>
 </body>
 </html>
