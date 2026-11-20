@@ -1,0 +1,10 @@
+{
+  "name": "muhlet-sure",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mühlet Süre — avukatlar için ücretsiz yasal süre hesaplayıcı (statik site)",
+  "scripts": {
+    "test": "node --test tests/engine.test.mjs"
+  }
+}

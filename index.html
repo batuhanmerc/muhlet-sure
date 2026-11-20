@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yasal Süre Hesaplayıcı | Mühlet Süre</title>
+<meta name="description" content="İstinaf, temyiz, cevap dilekçesi, ödeme emrine itiraz ve idari dava süreleri için ücretsiz son gün hesaplayıcı. e-Tebligat, adli tatil ve resmî tatiller dahil; hesabın her adımı kanun dayanağıyla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='1' y='1' width='26' height='26' rx='7' fill='%231f3a5f'/%3E%3Ccircle cx='20' cy='19' r='3' fill='%23e2884a'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="beta" role="status">
+  <strong>Test sürümü:</strong> Süre kuralları henüz bir avukat tarafından doğrulanmadı. Sonuçları mutlaka kendiniz kontrol edin.
+</div>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="./">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="7" fill="#1f3a5f"/><path d="M8 9h12M8 14h8M8 19h5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="20" cy="19" r="2.6" fill="#e2884a"/></svg>
+      <span>Mühlet Süre</span>
+    </a>
+    <nav aria-label="Ana menü">
+      <a href="#hesapla" aria-current="page">Hesapla</a>
+      <a href="#sureler">Süreler</a>
+      <a href="#hatirlatma">Hatırlatma</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <p class="eyebrow">Ücretsiz · Kayıt gerekmez</p>
+    <h1>Yasal süre hesaplayıcı</h1>
+    <p class="lead">Tebligat türünü ve tarihi girin. Son günü, hesabın her adımı ve kanun dayanağıyla birlikte görün.</p>
+  </section>
+
+  <div class="calc" id="hesapla">
+    <form id="form" class="card form" novalidate>
+      <div class="field">
+        <label for="islem">İşlem</label>
+        <select id="islem" name="islem"></select>
+      </div>
+
+      <fieldset class="field">
+        <legend>Karar size nasıl ulaştı?</legend>
+        <div class="seg">
+          <label><input type="radio" name="teblig" value="e" checked><span>e-Tebligat</span></label>
+          <label><input type="radio" name="teblig" value="fiziki"><span>Fiziki tebliğ</span></label>
+          <label><input type="radio" name="teblig" value="tefhim"><span>Tefhim</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="tarih" id="tarih-label">e-Tebligatın adresinize ulaştığı tarih</label>
+        <input id="tarih" name="tarih" type="date" required>
+        <p class="hint" id="tarih-hint">Belgeyi açtığınız tarih değil, adresinize ulaştığı tarih. Tebliğ, ulaşmayı izleyen 5. günün sonunda yapılmış sayılır.</p>
+      </div>
+
+      <div class="field" id="karar-field" hidden>
+        <label for="karar">Karar tarihi</label>
+        <input id="karar" name="karar" type="date">
+        <p class="hint">7499 sayılı Kanun ceza kanun yolu sürelerini değiştirdi. Hangi sürenin uygulanacağı karar tarihine göre belirlenir.</p>
+      </div>
+
+      <label class="check">
+        <input type="checkbox" id="muaf">
+        <span><strong>Adli tatilde görülen iş</strong><br><span class="hint">Örneğin iş davası, tutuklu iş. Bu işlerde süre adli tatilde de işler ve uzamaz.</span></span>
+      </label>
+
+      <p class="error" id="error" role="alert" hidden></p>
+      <button type="submit" class="btn primary">Son günü hesapla</button>
+    </form>
+
+    <section class="card result" id="result" aria-live="polite" aria-label="Hesaplama sonucu">
+      <div class="empty" id="empty">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8a97ab" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <p>Formu doldurup <strong>Son günü hesapla</strong>'ya basın. Sonuç ve hesabın adımları burada görünecek.</p>
+      </div>
+      <div id="output" hidden>
+        <div class="result-head">
+          <p class="eyebrow light" id="r-label">SON GÜN</p>
+          <p class="big" id="r-date"></p>
+          <p class="sub" id="r-sub"></p>
+        </div>
+        <div id="r-alerts"></div>
+        <div class="steps">
+          <h2>Hesap nasıl yapıldı?</h2>
+          <ol id="r-steps"></ol>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn accent" id="ics">Takvime ekle (.ics)</button>
+          <button type="button" class="btn ghost" id="copy">Hesabı kopyala</button>
+          <span class="copied" id="copied" role="status" hidden>Kopyalandı</span>
+        </div>
+        <p class="disclaimer">Bu araç yardımcı bir araçtır, hukuki görüş değildir. Son kontrol ve sorumluluk avukattadır. Tatil verisi 2025–2027 yıllarını kapsar.</p>
+      </div>
+    </section>
+  </div>
+
+  <section id="sureler" class="block">
+    <h2>Hesaplanabilen süreler</h2>
+    <div class="grid" id="rule-grid"></div>
+  </section>
+
+  <section id="hatirlatma" class="cta">
+    <div>
+      <h2>Hesapladığınız süreyi unutmayın</h2>
+      <p>Yakında: Süreyi kısa bir dosya koduyla kaydedin. Son güne 7, 3 ve 1 gün kala e-posta gelsin, süre takviminizde görünsün. Müvekkil bilgisi istemiyoruz.</p>
+    </div>
+    <a class="btn light" href="mailto:[E-POSTA-ADRESIN]?subject=M%C3%BChlet%20S%C3%BCre%20-%20Haber%20ver">Açılınca haber verin</a>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <span>© 2026 Mühlet Süre</span>
+    <span>Kurallar en son güncelleme: [TARİH]</span>
+    <a href="mailto:[E-POSTA-ADRESIN]">İletişim</a>
+  </div>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
