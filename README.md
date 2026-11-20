@@ -1,10 +1,18 @@
 # Mühlet Süre — Yasal Süre Hesaplayıcı
 
-Avukatlar için ücretsiz son gün hesaplayıcı. e-Tebligat (5. gün kuralı), adli tatil (HMK, CMK, İYUK politikaları), resmî tatiller ve hafta sonları dahil. Hesabın her adımını kanun dayanağıyla gösterir. Uygulamada yorum farkı olan durumlarda en erken (temkinli) tarihi son gün olarak gösterir, diğer tarihi uyarı olarak verir.
+Avukatlar için ücretsiz son gün hesaplayıcı ve tarayıcıda çalışan süre listesi (**Sürelerim**). e-Tebligat (5. gün kuralı), adli tatil (HMK, CMK, İYUK politikaları), resmî tatiller ve hafta sonları dahil. Hesabın her adımını kanun dayanağıyla gösterir. Uygulamada yorum farkı olan durumlarda en erken (temkinli) tarihi son gün olarak gösterir, diğer tarihi uyarı olarak verir.
 
 > ⚠️ **Test sürümü.** Süre kuralları ve tatil tarihleri henüz bir avukat tarafından doğrulanmadı. Sitenin üstündeki uyarı bandını, doğrulama tamamlanmadan kaldırmayın.
 
 Site tamamen statiktir: sunucu, veritabanı ya da kurulum gerekmez. Girilen bilgiler hiçbir yere gönderilmez, hesap tarayıcıda yapılır.
+
+## Sürelerim nasıl çalışır?
+
+- Hesaplanan süre, kısa bir dosya koduyla (en fazla 60 karakter) ve isteğe bağlı kısa bir notla (en fazla 140 karakter) kaydedilir. Müvekkil bilgisi istenmez.
+- Kayıtlar **sadece kullanıcının tarayıcısında** (localStorage) durur. Sunucu yok, KVKK açısından veri sitenin sahibine hiç ulaşmaz. Karşılığında başka cihazda görünmez ve tarayıcı verileri silinirse kaybolur. Bu yüzden "Yedek al / Yedeği geri yükle" var.
+- Liste, son güne kalan süreyi renkli etiketle gösterir: geçti / bugün / 3 gün / 7 gün.
+- "Açık süreleri takvime aktar" her süre için 7 gün, 3 gün kala ve son gün hatırlatmalı bir .ics dosyası indirir. Not alanı takvime gitmez; kısa kod etkinlik başlığında görünür.
+- Kurallar ya da tatil verisi güncellendiğinde kayıtlı süreler yeniden hesaplanır; tarih değişiyorsa kendiliğinden değiştirilmez, kullanıcıya gösterilip onayı istenir.
 
 ## Klasör yapısı
 
@@ -14,8 +22,10 @@ css/style.css         Görünüm
 js/rules.js           13 süre kuralı (kanun dayanağı ve sürümleriyle)
 js/holidays.js        2025–2027 resmî tatil ve dini bayram tarihleri
 js/engine.js          Hesaplama motoru (arayüzden bağımsız)
-js/app.js             Arayüz: form, sonuç, takvim dosyası, kopyalama
+js/store.js           Sürelerim: tarayıcıda kayıt, durum, yedek, toplu takvim dosyası
+js/app.js             Arayüz: form, sonuç, Sürelerim listesi, takvim dosyası, kopyalama
 tests/engine.test.mjs Motorun otomatik testleri
+tests/store.test.mjs  Sürelerim testleri
 .github/workflows/    Her gönderimde testleri GitHub'da çalıştırır
 ```
 

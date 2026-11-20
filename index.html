@@ -25,8 +25,8 @@
     </a>
     <nav aria-label="Ana menü">
       <a href="#hesapla" aria-current="page">Hesapla</a>
-      <a href="#sureler">Süreler</a>
-      <a href="#hatirlatma">Hatırlatma</a>
+      <a href="#surelerim">Sürelerim <span class="count" id="nav-count" hidden></span></a>
+      <a href="#sureler">Süre türleri</a>
     </nav>
   </div>
 </header>
@@ -92,10 +92,28 @@
           <ol id="r-steps"></ol>
         </div>
         <div class="actions">
-          <button type="button" class="btn accent" id="ics">Takvime ekle (.ics)</button>
+          <button type="button" class="btn accent" id="open-save" aria-expanded="false" aria-controls="save-form">Sürelerime kaydet</button>
+          <button type="button" class="btn ghost" id="ics">Takvime ekle (.ics)</button>
           <button type="button" class="btn ghost" id="copy">Hesabı kopyala</button>
           <span class="copied" id="copied" role="status" hidden>Kopyalandı</span>
         </div>
+        <form class="save-form" id="save-form" hidden novalidate>
+          <div class="field">
+            <label for="kod">Kısa dosya kodu</label>
+            <input id="kod" type="text" maxlength="60" placeholder="ör. 2026/145 Kadıköy 3. İş" autocomplete="off">
+            <p class="hint">Bu kod takvim etkinliğinin başlığında da görünür. Müvekkil adı yazmayın.</p>
+          </div>
+          <div class="field">
+            <label for="not">Not <span class="optional">(isteğe bağlı, en fazla 140 karakter)</span></label>
+            <input id="not" type="text" maxlength="140" autocomplete="off">
+            <p class="hint warn-hint">Müvekkil adı, TC kimlik no veya dava içeriği yazmayın.</p>
+          </div>
+          <p class="error" id="save-error" role="alert" hidden></p>
+          <div class="row">
+            <button type="submit" class="btn primary">Kaydet</button>
+            <button type="button" class="btn ghost" id="cancel-save">Vazgeç</button>
+          </div>
+        </form>
         <p class="disclaimer">Bu araç yardımcı bir araçtır, hukuki görüş değildir. Son kontrol ve sorumluluk avukattadır. Tatil verisi 2025–2027 yıllarını kapsar.</p>
       </div>
     </section>
@@ -106,13 +124,28 @@
     <div class="grid" id="rule-grid"></div>
   </section>
 
-  <section id="hatirlatma" class="cta">
-    <div>
-      <h2>Hesapladığınız süreyi unutmayın</h2>
-      <p>Yakında: Süreyi kısa bir dosya koduyla kaydedin. Son güne 7, 3 ve 1 gün kala e-posta gelsin, süre takviminizde görünsün. Müvekkil bilgisi istemiyoruz.</p>
+  <section id="surelerim" class="block">
+    <div class="list-head">
+      <h2>Sürelerim</h2>
+      <div class="tabs" role="tablist" aria-label="Süre listesi">
+        <button type="button" role="tab" id="tab-open" aria-selected="true">Açık <span id="cnt-open">0</span></button>
+        <button type="button" role="tab" id="tab-done" aria-selected="false">Tamamlanan <span id="cnt-done">0</span></button>
+      </div>
     </div>
-    <a class="btn light" href="mailto:[E-POSTA-ADRESIN]?subject=M%C3%BChlet%20S%C3%BCre%20-%20Haber%20ver">Açılınca haber verin</a>
+    <div class="notice" id="storage-note">
+      <strong>Kayıtlarınız sadece bu tarayıcıda durur.</strong> Sunucuya gönderilmez, başka cihazda görünmez. Tarayıcı verilerini silerseniz kaybolur, bu yüzden düzenli olarak yedek alın.
+    </div>
+    <div id="list-empty" class="list-empty">Henüz kayıtlı süre yok. Bir süre hesaplayıp <strong>Sürelerime kaydet</strong>'e basın.</div>
+    <ul class="dl" id="list"></ul>
+    <div class="list-tools">
+      <button type="button" class="btn ghost" id="ics-all">Açık süreleri takvime aktar (.ics)</button>
+      <button type="button" class="btn ghost" id="backup">Yedek al</button>
+      <label class="btn ghost file-btn">Yedeği geri yükle<input type="file" id="restore" accept="application/json,.json"></label>
+      <span class="copied" id="list-msg" role="status" hidden></span>
+    </div>
+    <p class="hint">Takvim dosyasını Google Takvim, Outlook ya da Apple Takvim'e içe aktarın. Her süre için 7 gün, 3 gün kala ve son gün hatırlatması eklenir. Bir süre için "İşlem yapıldı" dediğinizde takviminizdeki etkinliği elle silmeniz gerekir.</p>
   </section>
+
 </main>
 
 <footer class="site-footer">
