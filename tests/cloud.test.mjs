@@ -113,3 +113,16 @@ test('başka cihazda silinen kayıt bu cihazda da silinir, yeni yerel kayıt kor
   const m = merge(local, remote, [], ['1', '2']); // 1 ve 2 daha önce eşitlenmişti; 5 yeni
   assert.deepEqual(m.map((x) => x.id).sort(), ['2', '5']);
 });
+
+test('e-postadaki bağlantıyla giriş (#access_token)', async () => {
+  const f = fakeFetch([{ status: 200, body: { id: 'U7', email: 'l@x.com' } }]);
+  const st = memStorage();
+  const c = createCloud({ url: 'https://p', anonKey: 'ANON', storage: st, fetchFn: f });
+  const u = await c.fromLink('#access_token=AAA&expires_in=3600&refresh_token=RRR&token_type=bearer&type=magiclink');
+  assert.equal(u.id, 'U7');
+  assert.equal(f.calls[0].url, 'https://p/auth/v1/user');
+  assert.equal(f.calls[0].headers.Authorization, 'Bearer AAA');
+  assert.equal(c.user.email, 'l@x.com');
+  assert.equal(await c.fromLink('#surelerim'), null);
+  await assert.rejects(c.fromLink('#error=access_denied&error_description=Email+link+is+invalid'), /süresi dolmuş/);
+});

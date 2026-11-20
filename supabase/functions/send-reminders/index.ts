@@ -1,3 +1,4 @@
+// @ts-nocheck  (sade JavaScript; tip denetimi gerekmiyor)
 // Mühlet Süre — günlük hatırlatma e-postaları (Supabase Edge Function).
 // Her sabah zamanlayıcı (pg_cron) tarafından çağrılır. Son günü 7 gün, 3 gün içinde olan
 // ve bugün biten açık süreler için kullanıcıya TEK bir özet e-posta gönderir.

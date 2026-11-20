@@ -1,3 +1,4 @@
+// @ts-nocheck  (sade JavaScript; tip denetimi gerekmiyor)
 // Mühlet Süre — kullanıcının hesabını ve tüm kayıtlarını kalıcı olarak siler (KVKK m.7: silme hakkı).
 // Site, giriş yapmış kullanıcının oturum anahtarıyla çağırır. Kayıtlar veritabanında
 // "on delete cascade" ile kullanıcıyla birlikte silinir.

@@ -102,3 +102,6 @@ grant update (reminders_on, consent_at) on public.profiles to authenticated;
 grant select on public.profiles to authenticated;
 grant select, insert, update, delete on public.deadlines to authenticated;
 revoke all on public.deadlines, public.profiles, public.reminders_sent from anon;
+-- Sunucu fonksiyonları (hatırlatma gönderimi) için yönetici rolüne erişim
+grant usage on schema public to service_role;
+grant all on public.deadlines, public.profiles, public.reminders_sent to service_role;

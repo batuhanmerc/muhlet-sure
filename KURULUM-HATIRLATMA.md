@@ -23,7 +23,7 @@ Bu rehber, sitedeki **"E-posta ile hatırlatma"** bölümünü çalışır hâle
 3. Soldaki menüden **SQL Editor** → **New query**'yi seç. Projedeki `supabase/migrations/001_hesap_ve_sureler.sql` dosyasının **tamamını** kopyalayıp yapıştır, sonra **Run**'a bas. "Success. No rows returned" görmelisin.
 4. **Authentication → Sign In / Providers** sayfasında **Email**'in açık olduğunu kontrol et.
 5. **Authentication → URL Configuration** sayfasında **Site URL** alanına sitenin adresini yaz (`https://batuhanmerc.github.io/muhlet-sure/`) ve kaydet.
-6. **Authentication → Emails → Templates** sayfasında hem **Confirm signup** hem de **Magic Link** şablonunu aşağıdaki gibi değiştir. Bu şablonlar, giriş için link yerine 6 haneli kod gönderilmesini sağlar.
+6. *(B bölümünden sonra)* Supabase, e-posta şablonlarını ancak özel SMTP (Resend) bağlandıktan sonra düzenlemeye izin veriyor. O zamana kadar giriş e-postasında **bağlantı** gelir; site bu bağlantıyla da giriş yapar. SMTP bağlandıktan sonra **Authentication → Emails → Templates** sayfasında hem **Confirm signup** hem de **Magic Link** şablonunu aşağıdaki gibi değiştir; böylece telefonda da kolay olan 6 haneli kod gelir.
    - **Subject:** `Mühlet Süre giriş kodunuz: {{ .Token }}`
    - **Body:**
      ```html
@@ -36,7 +36,7 @@ Bu rehber, sitedeki **"E-posta ile hatırlatma"** bölümünü çalışır hâle
      ```
 7. **Project Settings → API Keys** (ya da **API**) sayfasından iki değeri kopyala:
    - **Project URL**, örneğin `https://abcdefgh.supabase.co`
-   - **anon public** anahtarı (uzun bir metin)
+   - **publishable** anahtarı (`sb_publishable_...` ile başlar; eski projelerde adı "anon public")
 
    > `service_role` ya da `secret` anahtarını **hiçbir yere yapıştırma**; o anahtar yönetici anahtarıdır.
 
@@ -74,7 +74,8 @@ Bu rehber, sitedeki **"E-posta ile hatırlatma"** bölümünü çalışır hâle
 1. Supabase'te **Edge Functions → Deploy a new function → Via Editor**'ı seç.
 2. **Fonksiyon adı:** `send-reminders`. Editördeki örnek kodu tamamen sil, projedeki `supabase/functions/send-reminders/index.ts` dosyasının tamamını yapıştır ve **Deploy function**'a bas.
 3. Aynı adımları `delete-account` adıyla ve `supabase/functions/delete-account/index.ts` dosyasıyla tekrarla.
-4. **Edge Functions → Secrets** (ya da *Manage secrets*) sayfasında şu 4 değeri ekle:
+4. Her iki fonksiyonun **Settings** sekmesinde **Verify JWT with legacy secret** ayarını **kapat** ve kaydet. (Fonksiyonlar kimlik kontrolünü kendileri yapıyor: biri `CRON_SECRET` ile, diğeri kullanıcının oturumuyla.)
+5. **Edge Functions → Secrets** (ya da *Manage secrets*) sayfasında şu 4 değeri ekle:
 
    | Ad | Değer |
    |---|---|
@@ -87,10 +88,10 @@ Bu rehber, sitedeki **"E-posta ile hatırlatma"** bölümünü çalışır hâle
 
 ## D. Her sabah çalışacak zamanlayıcı (5 dk)
 
-1. Supabase'te **Database → Extensions** sayfasında **pg_cron** ve **pg_net**'i bul ve ikisini de aç.
+1. Supabase'te **Database → Extensions** sayfasında **pg_cron** ve **pg_net**'i bul ve ikisini de aç (ya da SQL Editor'de `create extension if not exists pg_cron with schema pg_catalog; create extension if not exists pg_net with schema extensions;` çalıştır).
 2. **SQL Editor → New query** ile `supabase/migrations/002_zamanlayici.sql` dosyasının içeriğini yapıştır. Çalıştırmadan önce 3 yeri kendi değerlerinle değiştir:
    - `PROJE-KODU`: Proje adresindeki kod (`https://abcdefgh.supabase.co` → `abcdefgh`)
-   - `ANON-ANAHTAR`: A bölümünün 7. adımındaki anon anahtarı
+   - `ANON-ANAHTAR`: A bölümünün 7. adımındaki publishable anahtar
    - `CRON-SIFRESI`: C bölümünde yazdığın `CRON_SECRET`
 3. Değerleri değiştirdikten sonra **Run**'a bas.
 
@@ -104,7 +105,7 @@ Bu rehber, sitedeki **"E-posta ile hatırlatma"** bölümünü çalışır hâle
    ```sql
    select net.http_post(
      url := 'https://PROJE-KODU.supabase.co/functions/v1/send-reminders',
-     headers := jsonb_build_object('Content-Type','application/json','Authorization','Bearer ANON-ANAHTAR','x-cron-secret','CRON-SIFRESI'),
+     headers := jsonb_build_object('Content-Type','application/json','apikey','ANON-ANAHTAR','x-cron-secret','CRON-SIFRESI'),
      body := '{}'::jsonb
    );
    ```

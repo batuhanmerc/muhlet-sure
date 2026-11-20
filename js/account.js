@@ -78,7 +78,7 @@ function init() {
     run(e.submitter, async () => {
       await cloud.sendCode(v);
       email = v;
-      $('acc-code-info').textContent = `${v} adresine bir giriş kodu gönderdik. Birkaç dakika içinde gelmezse gereksiz (spam) klasörüne bakın.`;
+      $('acc-code-info').textContent = `${v} adresine bir e-posta gönderdik. İçindeki kodu aşağıya girin ya da e-postadaki bağlantıya tıklayın. Birkaç dakika içinde gelmezse gereksiz (spam) klasörüne bakın.`;
       view();
       $('acc-code').focus();
     });
@@ -143,5 +143,18 @@ function init() {
   document.addEventListener('muhlet:deleted', (e) => { if (cloud.user) cloud.markDeleted(e.detail.id); });
 
   view();
-  if (cloud.user) run(null, async () => { await loadProfile(); await syncNow(); });
+  // E-postadaki giriş bağlantısıyla gelindiyse oturumu aç ve adres çubuğunu temizle
+  if (/access_token=|error_description=/.test(location.hash)) {
+    const h = location.hash;
+    history.replaceState(null, '', location.pathname + location.search + '#surelerim');
+    run(null, async () => {
+      await cloud.fromLink(h);
+      view();
+      $('surelerim').scrollIntoView({ behavior: 'smooth' });
+      await loadProfile();
+      await syncNow();
+    });
+  } else if (cloud.user) {
+    run(null, async () => { await loadProfile(); await syncNow(); });
+  }
 }

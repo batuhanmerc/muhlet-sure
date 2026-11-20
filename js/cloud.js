@@ -139,6 +139,16 @@ export function createCloud({ url, anonKey, storage, fetchFn = globalThis.fetch.
       return keep(await call('/auth/v1/verify', { method: 'POST', body: { type: 'email', email, token: code } })).user;
     },
 
+    // E-postadaki bağlantıya tıklanınca Supabase siteye #access_token=... ile döner
+    async fromLink(hash) {
+      const q = new URLSearchParams(String(hash || '').replace(/^#/, ''));
+      if (q.get('error_description')) throw new CloudError('Giriş bağlantısının süresi dolmuş ya da daha önce kullanılmış. Yeni kod isteyin.', 403);
+      const at = q.get('access_token');
+      if (!at) return null;
+      const user = await call('/auth/v1/user', { token: at });
+      return keep({ access_token: at, refresh_token: q.get('refresh_token'), expires_at: Number(q.get('expires_at')) || undefined, expires_in: Number(q.get('expires_in')) || 3600, user }).user;
+    },
+
     async signOut() {
       try { if (session) await call('/auth/v1/logout', { method: 'POST', token: session.access_token }); } catch { /* yine de çık */ }
       session = null;
