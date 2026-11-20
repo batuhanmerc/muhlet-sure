@@ -75,11 +75,10 @@ Bu rehber, sitedeki **"E-posta ile hatırlatma"** bölümünü çalışır hâle
 2. **Fonksiyon adı:** `send-reminders`. Editördeki örnek kodu tamamen sil, projedeki `supabase/functions/send-reminders/index.ts` dosyasının tamamını yapıştır ve **Deploy function**'a bas.
 3. Aynı adımları `delete-account` adıyla ve `supabase/functions/delete-account/index.ts` dosyasıyla tekrarla.
 4. Her iki fonksiyonun **Settings** sekmesinde **Verify JWT with legacy secret** ayarını **kapat** ve kaydet. (Fonksiyonlar kimlik kontrolünü kendileri yapıyor: biri `CRON_SECRET` ile, diğeri kullanıcının oturumuyla.)
-5. **Edge Functions → Secrets** (ya da *Manage secrets*) sayfasında şu 4 değeri ekle:
+5. **Edge Functions → Secrets** (ya da *Manage secrets*) sayfasında şu 3 değeri ekle:
 
    | Ad | Değer |
    |---|---|
-   | `CRON_SECRET` | Rastgele uzun bir metin, örn. `k3J9-xQ2m-7Vt8-pL4w-Zr6n`. Bir yere not et, D bölümünde lazım olacak. |
    | `SITE_URL` | `https://batuhanmerc.github.io/muhlet-sure/` |
    | `RESEND_API_KEY` | Resend anahtarın (B bölümü). Henüz yoksa sonra eklersin. |
    | `MAIL_FROM` | `Mühlet Süre <hatirlatma@muhletsure.com>` |
@@ -88,28 +87,25 @@ Bu rehber, sitedeki **"E-posta ile hatırlatma"** bölümünü çalışır hâle
 
 ## D. Her sabah çalışacak zamanlayıcı (5 dk)
 
-1. Supabase'te **Database → Extensions** sayfasında **pg_cron** ve **pg_net**'i bul ve ikisini de aç (ya da SQL Editor'de `create extension if not exists pg_cron with schema pg_catalog; create extension if not exists pg_net with schema extensions;` çalıştır).
-2. **SQL Editor → New query** ile `supabase/migrations/002_zamanlayici.sql` dosyasının içeriğini yapıştır. Çalıştırmadan önce 3 yeri kendi değerlerinle değiştir:
-   - `PROJE-KODU`: Proje adresindeki kod (`https://abcdefgh.supabase.co` → `abcdefgh`)
-   - `ANON-ANAHTAR`: A bölümünün 7. adımındaki publishable anahtar
-   - `CRON-SIFRESI`: C bölümünde yazdığın `CRON_SECRET`
-3. Değerleri değiştirdikten sonra **Run**'a bas.
-
----
+1. **SQL Editor**'de şunu çalıştır: `create extension if not exists pg_cron with schema pg_catalog; create extension if not exists pg_net with schema extensions;`
+2. Ardından `supabase/migrations/003_zamanlayici_anahtari.sql` dosyasını **olduğu gibi** yapıştırıp **Run**'a bas. RLS uyarısı çıkarsa **Run and enable RLS**'i seç.
+   - Bu dosya zamanlayıcı için rastgele bir anahtar üretir ve veritabanında saklar. Kimsenin şifre yazıp kopyalaması gerekmez. Bu yüzden `CRON_SECRET` artık zorunlu değil.
+   - Proje adresi ve publishable anahtar dosyanın içinde yazılı. Başka bir projede kullanacaksan bu ikisini değiştir.
+   - Eski `002_zamanlayici.sql` dosyası yalnızca bilgi için duruyor; onu çalıştırmana gerek yok.
 
 ## E. Test et (10 dk)
 
 1. Siteyi aç, bir süre hesapla ve **Sürelerime kaydet**'e bas. Son günü **önümüzdeki 7 gün içinde** olan bir süre seç, örneğin bugünden 3 gün önceki bir e-Tebligat tarihiyle Ödeme emrine itiraz.
 2. Sürelerim bölümündeki kutuda e-posta adresini yaz, onay kutusunu işaretle ve **Giriş kodu gönder**'e bas. Gelen kodu girip giriş yap. Supabase → **Table Editor → deadlines** tablosunda kaydı görmelisin.
-3. Hatırlatmayı beklemeden denemek için **SQL Editor**'de şunu çalıştır (değerleri D bölümündeki gibi değiştir):
+3. Hatırlatmayı beklemeden denemek için **SQL Editor**'de şunu çalıştır:
    ```sql
-   select net.http_post(
-     url := 'https://PROJE-KODU.supabase.co/functions/v1/send-reminders',
-     headers := jsonb_build_object('Content-Type','application/json','apikey','ANON-ANAHTAR','x-cron-secret','CRON-SIFRESI'),
-     body := '{}'::jsonb
-   );
+   do $$ begin execute (select command from cron.job where jobname = 'muhlet-hatirlatma'); end $$;
    ```
-   Birkaç saniye içinde hatırlatma e-postası gelmeli. Gelmezse **Edge Functions → send-reminders → Logs** sayfasına bak. Aynı hatırlatma ikinci kez gönderilmez; tekrar denemek için **Table Editor → reminders_sent** tablosundaki satırı sil.
+   Birkaç saniye sonra sonucu görmek için:
+   ```sql
+   select status_code, content from net._http_response order by created desc limit 1;
+   ```
+   `200` ve `"sent":1` görmelisin; birkaç saniye içinde de e-posta gelir. Gelmezse **Edge Functions → send-reminders → Logs** sayfasına bak. Aynı hatırlatma ikinci kez gönderilmez; tekrar denemek için **Table Editor → reminders_sent** tablosundaki satırı sil.
 4. Sitede **Hesabımı sil**'i dene. Kullanıcı ve kayıtları Supabase'ten silinmeli.
 
 ---

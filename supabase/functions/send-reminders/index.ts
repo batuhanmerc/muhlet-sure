@@ -111,12 +111,19 @@ export function buildEmail(group, siteUrl) {
 
 async function handler(req) {
   const env = (k) => Deno.env.get(k) ?? '';
-  if (!env('CRON_SECRET') || req.headers.get('x-cron-secret') !== env('CRON_SECRET')) {
-    return new Response('Yetkisiz', { status: 401 });
-  }
   const base = env('SUPABASE_URL') + '/rest/v1';
   const key = env('SUPABASE_SERVICE_ROLE_KEY');
   const h = { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
+
+  // Yetki: zamanlayıcı, veritabanında rastgele üretilmiş anahtarı gönderir (003_zamanlayici_anahtari.sql).
+  // Eski kurulumla uyum için Secrets'taki CRON_SECRET de kabul edilir.
+  const given = req.headers.get('x-cron-secret') || '';
+  let allowed = !!given && !!env('CRON_SECRET') && given === env('CRON_SECRET');
+  if (!allowed && given) {
+    const chk = await fetch(`${base}/rpc/check_cron_key`, { method: 'POST', headers: h, body: JSON.stringify({ k: given }) });
+    allowed = chk.ok && (await chk.json()) === true;
+  }
+  if (!allowed) return new Response('Yetkisiz', { status: 401 });
   const today = istanbulToday();
   const until = addDaysISO(today, WINDOW);
   const dryRun = new URL(req.url).searchParams.get('dry') === '1';
