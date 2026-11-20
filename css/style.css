@@ -293,3 +293,38 @@ nav .count { background: var(--accent); color: #1d1206; font-size: 12px; font-we
   nav a { white-space: nowrap; }
   .hero-cta .btn { flex: 1 1 auto; }
 }
+
+/* ---------- Yumuşak geçişler ---------- */
+/* Aynı sayfadaki bölümlere (Hesapla, Sürelerim, SSS) kayarak gitme */
+html { scroll-behavior: smooth; }
+section[id], div[id="hesapla"] { scroll-margin-top: 16px; }
+
+/* Sayfalar arası geçiş (Süre rehberi, SSS, Gizlilik): eski sayfa sola kayıp solar, yenisi sağdan gelir */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: vt-out .28s ease both; }
+::view-transition-new(root) { animation: vt-in .32s ease both; }
+@keyframes vt-out { to { opacity: 0; transform: translateX(-24px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateX(24px); } }
+/* Üst menü ve alt bilgi geçişte yerinde dursun */
+.site-header { view-transition-name: site-header; }
+.beta { view-transition-name: beta; }
+
+/* Sayfa ilk açılışta hafifçe belirsin (geçiş desteklemeyen tarayıcılar için) */
+main { animation: page-in .35s ease both; }
+@keyframes page-in { from { opacity: 0; transform: translateY(8px); } }
+
+/* SSS cevapları açılırken kaysın */
+.faq details p { animation: faq-in .25s ease both; }
+@keyframes faq-in { from { opacity: 0; transform: translateY(-4px); } }
+
+/* Kartlar üzerine gelince hafifçe yükselsin */
+.grid button, .grid.links a, .how-steps li, .trust li { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.grid button:hover, .grid.links a:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(19, 33, 58, .08); }
+.btn { transition: background-color .15s ease, transform .1s ease; }
+.btn:active { transform: scale(.98); }
+
+/* Hareket istemeyen kullanıcılar için tüm animasyonlar kapalı */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after, ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; transition: none !important; }
+}

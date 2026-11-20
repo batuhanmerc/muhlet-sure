@@ -32,14 +32,14 @@ for (const r of RULES) {
   b.innerHTML = `<b></b><span></span>`;
   b.querySelector('b').textContent = r.name;
   b.querySelector('span').textContent = `${r.group} · ${v.amount} ${unitTR[v.unit]}`;
-  b.addEventListener('click', () => { select.value = r.code; onRuleChange(); location.hash = r.code; $('hesapla').scrollIntoView({ behavior: 'smooth' }); select.focus(); });
+  b.addEventListener('click', () => { select.value = r.code; onRuleChange(); location.hash = r.code; $('hesapla').scrollIntoView({ behavior: 'smooth' }); select.focus({ preventScroll: true }); });
   $('rule-grid').appendChild(b);
 }
 
 // Bağlantıdan işlem seçimi: index.html#HMK-IST
 if (location.hash && RULES.some((r) => r.code === location.hash.slice(1))) {
   select.value = location.hash.slice(1);
-  requestAnimationFrame(() => $('hesapla').scrollIntoView({ block: 'start' }));
+  setTimeout(() => $('hesapla').scrollIntoView({ behavior: 'smooth', block: 'start' }), 350);
 }
 
 const labels = {

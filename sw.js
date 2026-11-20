@@ -1,6 +1,6 @@
 // Service worker: önce ağdan dener (her zaman en güncel sürüm), ağ yoksa son kaydedilen kopyayı verir.
 // Yeni sürüm yayınlarken VERSION'ı değiştirmek eski önbelleği temizler.
-const VERSION = 'muhlet-v2';
+const VERSION = 'muhlet-v3';
 const CORE = [
   './', 'index.html', 'css/style.css',
   'js/app.js', 'js/evrak.js', 'js/pwa.js', 'js/rules.js', 'js/engine.js', 'js/holidays.js',
