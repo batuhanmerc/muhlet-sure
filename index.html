@@ -38,6 +38,26 @@
     <p class="lead">Tebligat türünü ve tarihi girin. Son günü, hesabın her adımı ve kanun dayanağıyla birlikte görün.</p>
   </section>
 
+  <section class="card drop" id="evrak" aria-labelledby="evrak-h">
+    <div class="drop-text">
+      <h2 id="evrak-h">Evrakı bırakın, süre gelsin <span class="new">Yeni</span></h2>
+      <p>UYAP'tan indirdiğiniz UDF ya da PDF evrakını buraya bırakın. Evrakın türünü ve doğurduğu süreyi önerelim. <strong>Evrak bilgisayarınızdan çıkmaz</strong>; tüm okuma tarayıcınızda yapılır.</p>
+    </div>
+    <label class="dropzone" id="dropzone" for="evrak-file">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
+      <span><strong>Dosyayı sürükleyin</strong> ya da seçmek için tıklayın</span>
+      <span class="hint">UDF, PDF ya da TXT · en fazla 15 MB</span>
+      <input type="file" id="evrak-file" accept=".udf,.pdf,.txt,application/pdf">
+    </label>
+    <details class="paste">
+      <summary>Ya da evrak metnini yapıştırın</summary>
+      <label for="evrak-text" class="sr-only">Evrak metni</label>
+      <textarea id="evrak-text" rows="6" placeholder="Evrakın ilk sayfasındaki metni buraya yapıştırın"></textarea>
+      <button type="button" class="btn ghost" id="evrak-analyze">Metni incele</button>
+    </details>
+    <div id="evrak-result" aria-live="polite"></div>
+  </section>
+
   <div class="calc" id="hesapla">
     <form id="form" class="card form" novalidate>
       <div class="field">
@@ -157,5 +177,6 @@
 </footer>
 
 <script type="module" src="js/app.js"></script>
+<script type="module" src="js/evrak.js"></script>
 </body>
 </html>

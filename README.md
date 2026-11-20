@@ -6,6 +6,15 @@ Avukatlar için ücretsiz son gün hesaplayıcı ve tarayıcıda çalışan sür
 
 Site tamamen statiktir: sunucu, veritabanı ya da kurulum gerekmez. Girilen bilgiler hiçbir yere gönderilmez, hesap tarayıcıda yapılır.
 
+## Evrakı bırak, süre gelsin
+
+- Avukat UYAP'tan indirdiği UDF ya da PDF evrakını sayfaya bırakır (ya da metni yapıştırır).
+- Evrak **tarayıcıda** okunur, hiçbir yere gönderilmez. PDF okumak için pdf.js kütüphanesi sitenin içinde gelir (`vendor/pdfjs`, Apache 2.0 lisansı); internetten indirilmez.
+- `js/classify.js` anahtar sözcüklerle belge türünü tahmin eder (hukuk/ceza/idari karar, bölge adliye kararı, bilirkişi raporu, dava dilekçesi, cevap dilekçesi, ödeme emri, vergi ihbarnamesi) ve karar tarihini bulur.
+- Sonuç **sadece öneridir**: kullanıcı "forma aktar"a basınca işlem ve (ceza işlerinde) karar tarihi forma girilir; ulaşma tarihini kullanıcı girer ve hesaplamayı kendisi başlatır.
+- **Doğrulanması gereken:** UDF dosyasının iç yapısı (ZIP içinde `content.xml`, metin CDATA içinde) gerçek UYAP örnekleriyle test edilmedi. Danışman avukattan kişisel bilgileri silinmiş 5–10 gerçek UDF/PDF evrak alıp `tests/classify.test.mjs`'e test olarak ekleyin.
+- Taranmış (görüntü) PDF'lerde metin olmadığı için tanıma çalışmaz; kullanıcıya metni yapıştırması söylenir.
+
 ## Sürelerim nasıl çalışır?
 
 - Hesaplanan süre, kısa bir dosya koduyla (en fazla 60 karakter) ve isteğe bağlı kısa bir notla (en fazla 140 karakter) kaydedilir. Müvekkil bilgisi istenmez.
@@ -24,8 +33,13 @@ js/holidays.js        2025–2027 resmî tatil ve dini bayram tarihleri
 js/engine.js          Hesaplama motoru (arayüzden bağımsız)
 js/store.js           Sürelerim: tarayıcıda kayıt, durum, yedek, toplu takvim dosyası
 js/app.js             Arayüz: form, sonuç, Sürelerim listesi, takvim dosyası, kopyalama
+js/classify.js        Evrak metninden belge türü ve süre önerisi
+js/docreader.js       UDF / PDF / TXT dosyasından metin çıkarma (tarayıcıda)
+js/evrak.js           Evrakı bırak arayüzü
+vendor/pdfjs/         pdf.js (Mozilla, Apache 2.0)
 tests/engine.test.mjs Motorun otomatik testleri
 tests/store.test.mjs  Sürelerim testleri
+tests/classify.test.mjs Belge türü tanıma testleri
 .github/workflows/    Her gönderimde testleri GitHub'da çalıştırır
 ```
 
