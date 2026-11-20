@@ -183,3 +183,9 @@ nav .count { background: var(--accent); color: #1d1206; font-size: 12px; font-we
   .seg span { font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+/* Evraktan forma aktarım geri bildirimi */
+.aktarildi { background: #e8f5ec; border: 1px solid #9fd3b0; color: #14532d; border-radius: 10px; padding: 12px 14px; font-size: 15px; line-height: 1.45; }
+.flash { animation: flash 1.6s ease-out; }
+@keyframes flash { 0%, 40% { box-shadow: 0 0 0 4px #9fd3b0; border-color: #2f8f4e; } 100% { box-shadow: none; } }
+.btn.done { background: #2f8f4e; border-color: #2f8f4e; color: #fff; }

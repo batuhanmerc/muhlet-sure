@@ -27,19 +27,34 @@ function showError(msg) {
   out.replaceChildren(box);
 }
 
-function useRule(code, dates) {
+function useRule(code, dates, btn) {
   const rule = findRule(code);
   const form = $('form');
   const sel = $('islem');
   sel.value = code;
   sel.dispatchEvent(new Event('change', { bubbles: true }));
   if (rule.needsDecisionDate && dates.karar) $('karar').value = dates.karar;
-  const eRadio = form.querySelector('input[name="teblig"][value="e"]');
-  if (eRadio && !form.teblig.value) eRadio.checked = true;
-  $('hesapla').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  setTimeout(() => $('tarih').focus(), 400);
-  const note = el('p', 'muted', `"${rule.name}" forma aktarıldı. Şimdi tebligatın size ulaştığı tarihi girip hesaplayın.`);
-  out.querySelector('.found')?.append(note);
+
+  // Görünür geri bildirim: formun en üstüne bilgi kutusu, seçim kutusunu vurgula
+  form.querySelector('.aktarildi')?.remove();
+  const note = el('div', 'aktarildi');
+  note.setAttribute('role', 'status');
+  note.append(el('strong', null, `✓ ${rule.group} · ${rule.name} seçildi.`));
+  note.append(el('span', null, $('tarih').value
+    ? ' Son gün hesaplandı, sonuca bakın.'
+    : ' Şimdi aşağıya tebligatın size ulaştığı tarihi girin ve “Son günü hesapla”ya basın.'));
+  form.prepend(note);
+  sel.classList.remove('flash'); void sel.offsetWidth; sel.classList.add('flash');
+
+  if (btn) { btn.textContent = '✓ Forma aktarıldı'; btn.classList.add('done'); }
+
+  if ($('tarih').value) {
+    form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true }));
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => $('tarih').focus({ preventScroll: true }), 500);
+  }
 }
 
 function show(r, source) {
@@ -68,7 +83,7 @@ function show(r, source) {
     const b = el('button', i === 0 ? 'btn primary' : 'btn ghost', `${s.why}: forma aktar`);
     b.type = 'button';
     b.title = `${rule.group} · ${rule.name}`;
-    b.addEventListener('click', () => useRule(s.ruleCode, r.dates));
+    b.addEventListener('click', () => useRule(s.ruleCode, r.dates, b));
     sugs.append(b);
   });
   box.append(sugs);
